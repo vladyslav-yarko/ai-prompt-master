@@ -103,3 +103,21 @@ class GameService(Service):
             mode=mode
         )
         return response, mode
+    
+    # creative mode
+    async def start_creative_mode(self) -> str:
+        task = await self.ask_llm([
+            SystemPrompt(task_creative_prompt.render()).message,
+            UserPrompt(start_creative_prompt.render()).message
+        ])
+        return task
+    
+    async def check_creative_mode(self, telegram_id: int, prompt: str) -> str:
+        mode = "creativeMode"
+        response = await self.check_mode(
+            telegram_id=telegram_id,
+            prompt=prompt,
+            mode=mode
+        )
+        return response, mode
+    
