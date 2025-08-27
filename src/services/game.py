@@ -137,3 +137,20 @@ class GameService(Service):
             mode=mode
         )
         return response, mode
+    
+    # anti-prompt mode    
+    async def start_anti_prompt_mode(self) -> str:
+        task = await self.ask_llm([
+            SystemPrompt(task_anti_prompt_prompt.render()).message,
+            UserPrompt(start_anti_prompt_prompt.render()).message
+        ])
+        return task
+    
+    async def check_anti_prompt_mode(self, telegram_id: int, prompt: str) -> str:
+        mode = "antiPromptMode"
+        response = await self.check_mode(
+            telegram_id=telegram_id,
+            prompt=prompt,
+            mode=mode
+        )
+        return response, mode
