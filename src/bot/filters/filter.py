@@ -28,3 +28,15 @@ class CallDataStarts(Filter):
     async def __call__(self, callback: CallbackQuery):
         result = callback.data.startswith(self.data)
         return result
+    
+    
+class CallDataStartsIn(Filter):
+    def __init__(self, *args: str):
+        self.data = args
+
+    async def __call__(self, callback: CallbackQuery):
+        result = False
+        for d in self.data:
+            if callback.data.startswith(d):
+                result = True
+        return result
