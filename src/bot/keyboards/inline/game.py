@@ -29,3 +29,15 @@ def game_info_hand_keyboard(mode: str) -> InlineKeyboard:
         ]
     ).keyboard()
     return keyboard
+
+
+def learn_game_hand_keyboard() -> InlineKeyboard:
+    keyboard = InlineKeyboard(
+        [
+            [
+                CallbackButton(text="1 ➡️", callback=f"game_learn_1").button,
+                CallbackButton(text="2 ➡️", callback=f"game_learn_2").button
+            ]
+        ]
+    ).keyboard()
+    return keyboard
