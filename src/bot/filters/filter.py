@@ -19,3 +19,12 @@ class CallDataEq(Filter):
     async def __call__(self, callback: CallbackQuery):
         result = self.data == callback.data
         return result
+    
+    
+class CallDataStarts(Filter):
+    def __init__(self, data: str):
+        self.data = data
+
+    async def __call__(self, callback: CallbackQuery):
+        result = callback.data.startswith(self.data)
+        return result
