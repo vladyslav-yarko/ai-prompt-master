@@ -35,3 +35,11 @@ class UserService(Service):
         level = await self.level_repo(self.session).get_one_by_title(LevelEnum.beginner.value)
         await self.user_stats_repo(self.session).create_one(userId=user.id, levelId=level.id)
         return user
+    
+    @transaction
+    async def delete_one(self, telegram_id: int) -> Optional[Base]:
+        user = await self.get_user_one(telegram_id=telegram_id)
+        if not user:
+            return None
+        user = await self.user_repo(self.session).delete_one(user.id)
+        return user
