@@ -10,3 +10,12 @@ class CallDataIn(Filter):
     async def __call__(self, callback: CallbackQuery):
         result = callback.data in self.data
         return result
+
+
+class CallDataEq(Filter):
+    def __init__(self, data: str):
+        self.data = data
+
+    async def __call__(self, callback: CallbackQuery):
+        result = self.data == callback.data
+        return result
