@@ -1,0 +1,31 @@
+from typing import Optional
+
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from src.utils.service import Service
+from src.utils.repository import Repository, transaction
+from src.utils.prompt import UserPrompt, SystemPrompt
+from src.utils.regex import find_score
+from src.models import Base
+from src.prompts.game import *
+
+
+class GameService(Service):
+    def __init__(
+        self,
+        session: AsyncSession,
+        game_repo: Repository,
+        user_repo: Repository,
+        user_stats_repo: Repository,
+        level_repo: Repository,
+        user_achievement_repo: Repository,
+        achievement_repo: Repository
+    ):
+        super().__init__(session)
+        self.repo = game_repo
+        self.game_repo = game_repo
+        self.user_repo = user_repo
+        self.user_stats_repo = user_stats_repo
+        self.level_repo = level_repo
+        self.user_achievement_repo = user_achievement_repo
+        self.achievement_repo = achievement_repo
