@@ -29,3 +29,7 @@ class GameService(Service):
         self.level_repo = level_repo
         self.user_achievement_repo = user_achievement_repo
         self.achievement_repo = achievement_repo
+        
+    async def get(self) -> list[Base]:
+        data = await super().get()
+        return data.get("data")
