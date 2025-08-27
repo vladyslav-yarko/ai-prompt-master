@@ -84,3 +84,22 @@ class GameService(Service):
         if new_achievements:
             await self.user_achievement_repo(self.session).create_many(new_achievements)
         return response
+        
+    
+    # learn mode
+    async def start_learn_mode(self) -> tuple[str, str, str]:
+        task = await self.ask_llm([
+            SystemPrompt(task_learn_prompt.render()).message,
+            UserPrompt(start_learn_prompt.render()).message
+        ])
+        task1, task2 = task.split("-----")
+        return task, task1, task2
+    
+    async def check_learn_mode(self, telegram_id: int, prompt: str) -> tuple[str, str]:
+        mode = "learnMode"
+        response = await self.check_mode(
+            telegram_id=telegram_id,
+            prompt=prompt,
+            mode=mode
+        )
+        return response, mode
