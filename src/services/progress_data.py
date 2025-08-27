@@ -15,3 +15,9 @@ class ProgressDataService(Service):
         self.repo = None
         self.level_repo = level_repo
         self.achievement_repo = achievement_repo
+        
+    async def get_levels(self) -> dict:
+        self.repo = self.level_repo
+        data = await super().get()
+        self.repo = None
+        return data
