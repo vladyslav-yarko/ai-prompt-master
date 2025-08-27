@@ -15,3 +15,17 @@ def games_hand_keyboard(game_title: str, mode: str) -> InlineKeyboard:
         ]
     ).keyboard()
     return keyboard
+
+
+def game_info_hand_keyboard(mode: str) -> InlineKeyboard:
+    keyboard = InlineKeyboard(
+        [
+            [
+                CallbackButton(text="Грати 🎮", callback=f"start_game_{mode}").button
+            ],
+            [
+                CallbackButton(text="Меню 🏠", callback="quit").button
+            ]
+        ]
+    ).keyboard()
+    return keyboard
