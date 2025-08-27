@@ -40,3 +40,13 @@ class CallDataStartsIn(Filter):
             if callback.data.startswith(d):
                 result = True
         return result
+
+
+class StateIn(Filter):
+    def __init__(self, *args: FSMContext):
+        self.states = args
+
+    async def __call__(self, obj: TelegramObject, state: FSMContext):
+        current_state = await state.get_state()
+        result = current_state in self.states
+        return result
