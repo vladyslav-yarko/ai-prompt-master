@@ -41,3 +41,18 @@ def learn_game_hand_keyboard() -> InlineKeyboard:
         ]
     ).keyboard()
     return keyboard
+
+
+def continue_keyboard(mode: str) -> InlineKeyboard:
+    keyboard = InlineKeyboard(
+        [
+            [
+                CallbackButton(text="Продовжити", callback=f"start_game_{mode}").button,
+            ],
+            [
+                CallbackButton(text="Інші ігри 🎮", callback=f"games").button,
+                CallbackButton(text="Меню 🏠", callback="quit").button
+            ]
+        ]
+    ).keyboard()
+    return keyboard
