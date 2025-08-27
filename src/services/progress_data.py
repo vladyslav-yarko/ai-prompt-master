@@ -21,3 +21,9 @@ class ProgressDataService(Service):
         data = await super().get()
         self.repo = None
         return data
+    
+    async def get_achievements(self) -> dict:
+        self.repo = self.achievement_repo
+        data = await super().get()
+        self.repo = None
+        return data
