@@ -154,3 +154,20 @@ class GameService(Service):
             mode=mode
         )
         return response, mode
+    
+    # puzzles mode    
+    async def start_puzzles_mode(self) -> str:
+        task = await self.ask_llm([
+            SystemPrompt(task_puzzles_prompt.render()).message,
+            UserPrompt(start_puzzles_prompt.render()).message
+        ])
+        return task
+    
+    async def check_puzzles_mode(self, telegram_id: int, prompt: str) -> str:
+        mode = "puzzleMode"
+        response = await self.check_mode(
+            telegram_id=telegram_id,
+            prompt=prompt,
+            mode=mode
+        )
+        return response, mode
