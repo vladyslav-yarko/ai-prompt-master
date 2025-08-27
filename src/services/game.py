@@ -44,3 +44,43 @@ class GameService(Service):
             UserPrompt(prompt).message
         ])
         return data
+    
+    @transaction
+    async def check_mode(self, telegram_id: int, prompt: str, mode: str) -> str:
+        response = await self.check_prompt(prompt)
+        score = find_score(response)
+        user_data = await self.get_user_one_with_data(telegram_id)
+        user = user_data.get("user")
+        # User statistics
+        user_statistics = user_data.get("statistics")
+        total_score = user_statistics.totalScore + score
+        total_games_played = user_statistics.totalGamesPlayed + 1
+        mode_score = getattr(user_statistics, mode) + score
+        # User level
+        user_level = user_data.get("level")
+        level_id = user_level.id
+        next_level = await self.level_repo(self.session).get_next(level_id)
+        if next_level and next_level.requiredScore <= total_score:
+            level_id = next_level.id
+        mode_score_d = {mode: mode_score}
+        await self.user_stats_repo(self.session).update_one_by_user_id(
+            user.id, 
+            totalScore=total_score,
+            totalGamesPlayed=total_games_played,
+            levelId=level_id,
+            **mode_score_d
+        )
+        # User achievements
+        mode_achievements = await self.achievement_repo(self.session).get_by_condition_key(mode)
+        user_achievements_ids = [ach.id for ach in user_data["achievements"]]
+        new_achievements = []
+        for achievement in mode_achievements:
+            if achievement.conditionValue <= mode_score:
+                if achievement.id not in user_achievements_ids:
+                    new_achievements.append({
+                        "userId": user.id,
+                        "achievementId": achievement.id
+                    })
+        if new_achievements:
+            await self.user_achievement_repo(self.session).create_many(new_achievements)
+        return response
