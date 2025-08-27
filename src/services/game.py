@@ -33,3 +33,7 @@ class GameService(Service):
     async def get(self) -> list[Base]:
         data = await super().get()
         return data.get("data")
+
+    async def get_one(self, title: str) -> Optional[Base]:
+        data = await self.game_repo(self.session).get_one_by_title(title)
+        return data
