@@ -25,3 +25,13 @@ class UserService(Service):
         self.user_achievement_repo = user_achievement_repo
         self.level_repo = level_repo
         self.achievement_repo = achievement_repo
+        
+    @transaction
+    async def create_one(self, data: dict) -> Optional[Base]:
+        user = await self.get_user_one(telegram_id=data.get("telegramId"))
+        if user:
+            return None
+        user = await super().create_one(data)
+        level = await self.level_repo(self.session).get_one_by_title(LevelEnum.beginner.value)
+        await self.user_stats_repo(self.session).create_one(userId=user.id, levelId=level.id)
+        return user
