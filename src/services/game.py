@@ -121,3 +121,19 @@ class GameService(Service):
         )
         return response, mode
     
+    # code mode    
+    async def start_code_mode(self) -> str:
+        task = await self.ask_llm([
+            SystemPrompt(task_code_prompt.render()).message,
+            UserPrompt(start_code_prompt.render()).message
+        ])
+        return task
+    
+    async def check_code_mode(self, telegram_id: int, prompt: str) -> str:
+        mode = "codeMode"
+        response = await self.check_mode(
+            telegram_id=telegram_id,
+            prompt=prompt,
+            mode=mode
+        )
+        return response, mode
