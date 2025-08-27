@@ -37,3 +37,10 @@ class GameService(Service):
     async def get_one(self, title: str) -> Optional[Base]:
         data = await self.game_repo(self.session).get_one_by_title(title)
         return data
+    
+    async def check_prompt(self, prompt: str, **kwargs) -> str:
+        data = await self.ask_llm([
+            SystemPrompt(check_prompt.render()).message,
+            UserPrompt(prompt).message
+        ])
+        return data
