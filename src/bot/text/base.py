@@ -39,3 +39,15 @@ s_levels_hand_text = Text("""
 
 Набирай досвід, щоб підніматися вище!
 """)
+
+
+s_achievements_hand_text = Text("""
+🏆 *Усі досягнення*
+
+{% for achievement in achievements %}
+{{ achievement.emoji }} *{{ achievement.title }}*:
+{{ achievement.description }}
+{% endfor %}
+
+Розблокуй їх усі!
+""")
