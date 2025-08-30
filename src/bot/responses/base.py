@@ -11,3 +11,8 @@ class BaseMessageResponse(MessageResponse):
     async def help_hand(self) -> None:
         self.text = s_help_hand_text.render()
         await self.answer()
+        
+    async def levels_hand(self, service: ProgressDataService) -> None:
+        data = await service.get_levels()
+        self.text = s_levels_hand_text.render(levels=data.get("data"))
+        await self.answer()
