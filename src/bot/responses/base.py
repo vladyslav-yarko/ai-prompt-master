@@ -21,3 +21,7 @@ class BaseMessageResponse(MessageResponse):
         data = await service.get_achievements()
         self.text = s_achievements_hand_text.render(achievements=data.get("data"))
         await self.answer()
+        
+    async def rules_hand(self) -> None:
+        self.text = s_rules_hand_text.render()
+        await self.answer()
