@@ -25,3 +25,12 @@ class BaseMessageResponse(MessageResponse):
     async def rules_hand(self) -> None:
         self.text = s_rules_hand_text.render()
         await self.answer()
+        
+    async def message_quit_hand(self) -> None:
+        current_state = await self.state.get_state()
+        if current_state is None:
+            self.text = e_quit_hand_text.render()
+        else:
+            self.text = s_quit_hand_text.render()
+            await self.state.clear()
+        await self.answer()
