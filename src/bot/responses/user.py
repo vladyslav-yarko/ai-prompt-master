@@ -46,4 +46,14 @@ class UserMessageResponse(MessageResponse):
         
         
 class UserCallbackResponse(CallbackResponse):
-    pass
+    async def delete_hand(self, service: UserService) -> None:
+        telegram_id = self.callback.from_user.id
+        user = await service.delete_one(telegram_id)
+        if not user:
+            # There is not sense to write text again
+            self.text = e_delete_command_hand_text.render()
+        else:
+            self.text = s_delete_hand_text.render()
+            await self.state.clear()
+            self.click_text = "Акаунт видалено!"
+        await self.answer()
