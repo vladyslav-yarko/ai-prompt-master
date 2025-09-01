@@ -43,3 +43,7 @@ class UserMessageResponse(MessageResponse):
                 **user
             )
         await self.answer()
+        
+        
+class UserCallbackResponse(CallbackResponse):
+    pass
