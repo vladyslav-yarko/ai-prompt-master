@@ -24,3 +24,10 @@ s_games_hand_text_game = Text("""
 
 🎮 {{ shortDescription }}
 """)
+
+
+s_game_info_hand_text = Text("""
+{{ title }}
+
+{{ description }}
+""")
