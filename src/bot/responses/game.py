@@ -35,4 +35,15 @@ class GameMessageResponse(MessageResponse):
         for game in games:
             self.text = s_games_hand_text_game.render(**game.to_dict())
             self.keyboard = games_hand_keyboard(game.title, game.mode)
-            await self.answer()
+            await self.answer()        
+        
+    async def active_creative_game_hand(self, service: GameService) -> None:
+        prompt = self.message.text
+        response, mode = await service.check_creative_mode(
+            self.message.from_user.id,
+            prompt
+        )
+        self.text = response
+        self.keyboard = continue_keyboard(mode)
+        await self.state.set_state(ActiveGameState.creative_waiting)
+        await self.answer()        
