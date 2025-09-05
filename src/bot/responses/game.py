@@ -58,3 +58,14 @@ class GameMessageResponse(MessageResponse):
         self.keyboard = continue_keyboard(mode)
         await self.state.set_state(ActiveGameState.code_waiting)
         await self.answer()  
+        
+    async def active_anti_prompt_game_hand(self, service: GameService) -> None:
+        prompt = self.message.text
+        response, mode = await service.check_anti_prompt_mode(
+            self.message.from_user.id,
+            prompt
+        )
+        self.text = response
+        self.keyboard = continue_keyboard(mode)
+        await self.state.set_state(ActiveGameState.anti_prompt_waiting)
+        await self.answer()  
