@@ -47,3 +47,14 @@ class GameMessageResponse(MessageResponse):
         self.keyboard = continue_keyboard(mode)
         await self.state.set_state(ActiveGameState.creative_waiting)
         await self.answer()        
+        
+    async def active_code_game_hand(self, service: GameService) -> None:
+        prompt = self.message.text
+        response, mode = await service.check_code_mode(
+            self.message.from_user.id,
+            prompt
+        )
+        self.text = response
+        self.keyboard = continue_keyboard(mode)
+        await self.state.set_state(ActiveGameState.code_waiting)
+        await self.answer()  
