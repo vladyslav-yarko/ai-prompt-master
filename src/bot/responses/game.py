@@ -13,4 +13,26 @@ from src.utils.prompt import AIPrompt, UserPrompt
 
 
 class GameMessageResponse(MessageResponse):
-    pass
+    async def command_games_hand(self, user: User, service: GameService) -> None:
+        if not user:
+            self.text = e_games_hand_text.render()
+            await self.answer()
+            return 
+        games = await service.get()
+        await self.state.set_state(GameState.active)
+        state_data = await self.state.get_data()
+        learn_mode = state_data.get("learnModeData")
+        if learn_mode is None:
+            await self.state.update_data(
+                learnModeData=[],
+                creativeModeData=[],
+                codeModeData=[],
+                antiPromptModeData=[],
+                puzzleModeData=[]
+            )
+        self.text = s_games_hand_text.render()
+        await self.answer()
+        for game in games:
+            self.text = s_games_hand_text_game.render(**game.to_dict())
+            self.keyboard = games_hand_keyboard(game.title, game.mode)
+            await self.answer()
