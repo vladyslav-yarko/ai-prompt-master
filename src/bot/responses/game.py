@@ -83,4 +83,16 @@ class GameMessageResponse(MessageResponse):
 
 
 class GameCallbackResponse(CallbackResponse):
-    pass
+    async def callback_games_hand(self, user: User, service: GameService) -> None:
+        if not user:
+            self.text = e_games_hand_text.render()
+            await self.answer()
+            return 
+        games = await service.get()
+        await self.state.set_state(GameState.active)
+        self.text = s_games_hand_text.render()
+        await self.answer()
+        for game in games:
+            self.text = s_games_hand_text_game.render(**game.to_dict())
+            self.keyboard = games_hand_keyboard(game.title, game.mode)
+            await self.answer()
