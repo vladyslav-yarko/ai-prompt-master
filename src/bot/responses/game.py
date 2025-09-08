@@ -80,3 +80,7 @@ class GameMessageResponse(MessageResponse):
         self.keyboard = continue_keyboard(mode)
         await self.state.set_state(ActiveGameState.puzzles_waiting)
         await self.answer()  
+
+
+class GameCallbackResponse(CallbackResponse):
+    pass
