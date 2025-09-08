@@ -96,3 +96,11 @@ class GameCallbackResponse(CallbackResponse):
             self.text = s_games_hand_text_game.render(**game.to_dict())
             self.keyboard = games_hand_keyboard(game.title, game.mode)
             await self.answer()
+            
+    async def game_info_hand(self, service: GameService) -> None:
+        title = self.callback.data.split("_")[-1]
+        game = await service.get_one(title)
+        self.text = s_game_info_hand_text.render(**game.to_dict())
+        self.keyboard = game_info_hand_keyboard(game.mode)
+        self.click_text = title
+        await self.answer()
