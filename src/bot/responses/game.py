@@ -104,3 +104,11 @@ class GameCallbackResponse(CallbackResponse):
         self.keyboard = game_info_hand_keyboard(game.mode)
         self.click_text = title
         await self.answer()
+        
+    async def learn_game_hand(self, service: GameService) -> None:
+        task, task1, task2 = await service.start_learn_mode()
+        self.text = task
+        self.keyboard = learn_game_hand_keyboard()
+        await self.state.update_data(game_learn_1=task1, game_learn_2=task2, learnModeTask=task)
+        await self.state.set_state(ActiveGameState.learn_mode)
+        await self.answer()
