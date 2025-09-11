@@ -60,3 +60,11 @@ async def message_quit_hand(message: Message, state: FSMContext):
         message=message,
         state=state
     ).message_quit_hand()
+    
+    
+@router.callback_query(StateFilter("*"), CallDataEq("quit"))
+async def callback_quit_hand(callback: CallbackQuery, state: FSMContext):
+    await BaseCallbackResponse(
+        callback=callback,
+        state=state
+    ).callback_quit_hand()
