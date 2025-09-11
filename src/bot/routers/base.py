@@ -36,3 +36,11 @@ async def levels_hand(message: Message, state: FSMContext, service: ProgressData
         message=message,
         state=state
     ).levels_hand(service)
+    
+    
+@router.message(StateFilter(None), Command("achievements"))
+async def achievement_hand(message: Message, state: FSMContext, service: ProgressDataService):
+    await BaseMessageResponse(
+        message=message,
+        state=state
+    ).achievement_hand(service)
