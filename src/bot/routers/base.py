@@ -28,3 +28,11 @@ async def help_hand(message: Message, state: FSMContext):
         message=message,
         state=state
     ).help_hand()
+    
+    
+@router.message(StateFilter(None), Command("levels"))
+async def levels_hand(message: Message, state: FSMContext, service: ProgressDataService):
+    await BaseMessageResponse(
+        message=message,
+        state=state
+    ).levels_hand(service)
