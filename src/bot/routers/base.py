@@ -44,3 +44,11 @@ async def achievement_hand(message: Message, state: FSMContext, service: Progres
         message=message,
         state=state
     ).achievement_hand(service)
+    
+    
+@router.message(StateFilter(None), Command("rules"))
+async def rules_hand(message: Message, state: FSMContext):
+    await BaseMessageResponse(
+        message=message,
+        state=state
+    ).rules_hand()
