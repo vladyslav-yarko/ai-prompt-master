@@ -52,3 +52,11 @@ async def rules_hand(message: Message, state: FSMContext):
         message=message,
         state=state
     ).rules_hand()
+    
+    
+@router.message(StateFilter("*"), Command("quit"))
+async def message_quit_hand(message: Message, state: FSMContext):
+    await BaseMessageResponse(
+        message=message,
+        state=state
+    ).message_quit_hand()
