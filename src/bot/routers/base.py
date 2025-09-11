@@ -20,3 +20,11 @@ async def start_hand(message: Message, state: FSMContext):
         message=message,
         state=state
     ).start_hand()
+
+
+@router.message(StateFilter(None), Command('help'))
+async def help_hand(message: Message, state: FSMContext):
+    await BaseMessageResponse(
+        message=message,
+        state=state
+    ).help_hand()
