@@ -13,3 +13,11 @@ from src.services import UserService
 router = Router()
 router.message.middleware(UserMiddleware())
 router.callback_query.middleware(UserMiddleware())
+
+
+@router.message(StateFilter(None), Command('authorize'))
+async def authorize_hand(message: Message, state: FSMContext, service: UserService):
+    await UserMessageResponse(
+        message=message,
+        state=state
+    ).authorize_hand(service)
