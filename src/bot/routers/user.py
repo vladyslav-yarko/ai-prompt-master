@@ -21,3 +21,11 @@ async def authorize_hand(message: Message, state: FSMContext, service: UserServi
         message=message,
         state=state
     ).authorize_hand(service)
+
+
+@router.message(StateFilter(None), Command('delete'))
+async def delete_command_hand(message: Message, state: FSMContext, service: UserService):
+    await UserMessageResponse(
+        message=message,
+        state=state
+    ).delete_command_hand(service)
