@@ -37,3 +37,11 @@ async def profile_hand(message: Message, state: FSMContext, service: UserService
         message=message,
         state=state
     ).profile_hand(service)
+    
+    
+@router.callback_query(StateFilter(UserState.delete), CallDataEq("delete"))
+async def delete_hand(callback: CallbackQuery, state: FSMContext, service: UserService):
+    await UserCallbackResponse(
+        callback=callback,
+        state=state
+    ).delete_hand(service)
