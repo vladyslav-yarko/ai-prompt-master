@@ -29,3 +29,11 @@ async def delete_command_hand(message: Message, state: FSMContext, service: User
         message=message,
         state=state
     ).delete_command_hand(service)
+    
+    
+@router.message(StateFilter(None), Command("profile"))
+async def profile_hand(message: Message, state: FSMContext, service: UserService):
+    await UserMessageResponse(
+        message=message,
+        state=state
+    ).profile_hand(service)
