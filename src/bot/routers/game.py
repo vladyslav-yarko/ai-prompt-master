@@ -69,3 +69,11 @@ async def creative_game_hand(callback: CallbackQuery, state: FSMContext, service
         callback=callback,
         state=state
     ).creative_game_hand(service)
+    
+    
+@router.message(StateFilter(ActiveGameState.creative_mode))
+async def active_creative_game_hand(message: Message, state: FSMContext, service: GameService):
+    await GameMessageResponse(
+        message=message,
+        state=state
+    ).active_creative_game_hand(service)
