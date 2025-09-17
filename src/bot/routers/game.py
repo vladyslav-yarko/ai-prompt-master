@@ -59,3 +59,13 @@ async def active_learn_game_hand(callback: CallbackQuery, state: FSMContext, ser
         callback=callback,
         state=state
     ).active_learn_game_hand(service)
+    
+    
+# Creative mode    
+    
+@router.callback_query(StateIn(GameState.active, ActiveGameState.creative_waiting), CallDataEq("start_game_creativeMode"))
+async def creative_game_hand(callback: CallbackQuery, state: FSMContext, service: GameService):
+    await GameCallbackResponse(
+        callback=callback,
+        state=state
+    ).creative_game_hand(service)
