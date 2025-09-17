@@ -113,3 +113,13 @@ async def active_anti_prompt_game_hand(message: Message, state: FSMContext, serv
         message=message,
         state=state
     ).active_anti_prompt_game_hand(service)
+    
+    
+# Puzzles mode
+    
+@router.callback_query(StateIn(GameState.active, ActiveGameState.puzzles_waiting), CallDataEq("start_game_puzzleMode"))
+async def puzzles_game_hand(callback: CallbackQuery, state: FSMContext, service: GameService):
+    await GameCallbackResponse(
+        callback=callback,
+        state=state
+    ).puzzles_game_hand(service)
