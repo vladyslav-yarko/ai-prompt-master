@@ -123,3 +123,11 @@ async def puzzles_game_hand(callback: CallbackQuery, state: FSMContext, service:
         callback=callback,
         state=state
     ).puzzles_game_hand(service)
+    
+    
+@router.message(StateFilter(ActiveGameState.puzzles_mode))
+async def active_puzzles_game_hand(message: Message, state: FSMContext, service: GameService):
+    await GameMessageResponse(
+        message=message,
+        state=state
+    ).active_puzzles_game_hand(service)
