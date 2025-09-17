@@ -51,3 +51,11 @@ async def learn_game_hand(callback: CallbackQuery, state: FSMContext, service: G
         callback=callback,
         state=state
     ).learn_game_hand(service)
+    
+    
+@router.callback_query(StateFilter(ActiveGameState.learn_mode), CallDataStartsIn("game_learn_1", "game_learn_2"))
+async def active_learn_game_hand(callback: CallbackQuery, state: FSMContext, service: GameService):
+    await GameCallbackResponse(
+        callback=callback,
+        state=state
+    ).active_learn_game_hand(service)
