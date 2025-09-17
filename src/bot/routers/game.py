@@ -33,3 +33,11 @@ async def callback_games_hand(callback: CallbackQuery, state: FSMContext, user: 
         callback=callback,
         state=state
     ).callback_games_hand(user, service)
+    
+    
+@router.callback_query(StateFilter(GameState.active), CallDataStarts("description_game_"))
+async def game_info_hand(callback: CallbackQuery, state: FSMContext, service: GameService):
+    await GameCallbackResponse(
+        callback=callback,
+        state=state
+    ).game_info_hand(service)
