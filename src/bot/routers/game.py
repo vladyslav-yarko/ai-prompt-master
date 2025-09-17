@@ -25,3 +25,11 @@ async def command_games_hand(message: Message, state: FSMContext, user: User, se
         message=message,
         state=state
     ).command_games_hand(user, service)
+    
+    
+@router.callback_query(StateFilter(ActiveGameState), CallDataEq("games"))
+async def callback_games_hand(callback: CallbackQuery, state: FSMContext, user: User, service: GameService):
+    await GameCallbackResponse(
+        callback=callback,
+        state=state
+    ).callback_games_hand(user, service)
