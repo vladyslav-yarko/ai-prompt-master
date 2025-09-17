@@ -77,3 +77,13 @@ async def active_creative_game_hand(message: Message, state: FSMContext, service
         message=message,
         state=state
     ).active_creative_game_hand(service)
+    
+    
+# Code mode    
+    
+@router.callback_query(StateIn(GameState.active, ActiveGameState.code_waiting), CallDataEq("start_game_codeMode"))
+async def code_game_hand(callback: CallbackQuery, state: FSMContext, service: GameService):
+    await GameCallbackResponse(
+        callback=callback,
+        state=state
+    ).code_game_hand(service)
