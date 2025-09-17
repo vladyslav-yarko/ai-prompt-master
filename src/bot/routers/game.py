@@ -87,3 +87,11 @@ async def code_game_hand(callback: CallbackQuery, state: FSMContext, service: Ga
         callback=callback,
         state=state
     ).code_game_hand(service)
+    
+    
+@router.message(StateFilter(ActiveGameState.code_mode))
+async def active_code_game_hand(message: Message, state: FSMContext, service: GameService):
+    await GameMessageResponse(
+        message=message,
+        state=state
+    ).active_code_game_hand(service)
