@@ -105,3 +105,11 @@ async def anti_prompt_game_hand(callback: CallbackQuery, state: FSMContext, serv
         callback=callback,
         state=state
     ).anti_prompt_game_hand(service)
+    
+    
+@router.message(StateFilter(ActiveGameState.anti_prompt_mode))
+async def active_anti_prompt_game_hand(message: Message, state: FSMContext, service: GameService):
+    await GameMessageResponse(
+        message=message,
+        state=state
+    ).active_anti_prompt_game_hand(service)
