@@ -112,3 +112,20 @@ class GameCallbackResponse(CallbackResponse):
         await self.state.update_data(game_learn_1=task1, game_learn_2=task2, learnModeTask=task)
         await self.state.set_state(ActiveGameState.learn_mode)
         await self.answer()
+
+    async def active_learn_game_hand(self, service: GameService) -> None:
+        self.click_text = "Вибір зроблено 🧠"
+        state_data = await self.state.get_data()
+        prompt = state_data.get(self.callback.data)
+        response, mode = await service.check_learn_mode(
+            self.callback.from_user.id,
+            prompt
+        )
+        self.text = response
+        self.keyboard = continue_keyboard(mode)
+        await self.state.set_state(ActiveGameState.learn_waiting)
+        learn_mode_data = state_data.get("learnModeData")
+        learn_mode_data.append(AIPrompt(state_data.get("learnModeTask")).message)
+        learn_mode_data.append(UserPrompt(prompt).message)
+        await self.state.update_data(learnModeData=learn_mode_data)
+        await self.answer()
