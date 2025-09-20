@@ -129,3 +129,9 @@ class GameCallbackResponse(CallbackResponse):
         learn_mode_data.append(UserPrompt(prompt).message)
         await self.state.update_data(learnModeData=learn_mode_data)
         await self.answer()
+        
+    async def creative_game_hand(self, service: GameService) -> None:
+        task = await service.start_creative_mode()
+        self.text = task
+        await self.state.set_state(ActiveGameState.creative_mode)
+        await self.answer()
