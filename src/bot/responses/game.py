@@ -135,3 +135,9 @@ class GameCallbackResponse(CallbackResponse):
         self.text = task
         await self.state.set_state(ActiveGameState.creative_mode)
         await self.answer()
+        
+    async def code_game_hand(self, service: GameService) -> None:
+        task = await service.start_code_mode()
+        self.text = task
+        await self.state.set_state(ActiveGameState.code_mode)
+        await self.answer()
