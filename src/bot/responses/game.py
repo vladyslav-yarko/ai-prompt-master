@@ -141,3 +141,9 @@ class GameCallbackResponse(CallbackResponse):
         self.text = task
         await self.state.set_state(ActiveGameState.code_mode)
         await self.answer()
+        
+    async def anti_prompt_game_hand(self, service: GameService) -> None:
+        task = await service.start_anti_prompt_mode()
+        self.text = task
+        await self.state.set_state(ActiveGameState.anti_prompt_mode)
+        await self.answer()
