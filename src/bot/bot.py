@@ -21,3 +21,9 @@ class Bot(Application):
             game_router
         ]
         self.dp.include_routers(*self.routers)
+        
+    def create(self) -> AiogramBot:
+        self.app = AiogramBot(
+            token=self.token
+        )
+        return self.app
