@@ -27,3 +27,7 @@ class Bot(Application):
             token=self.token
         )
         return self.app
+    
+    async def run(self) -> None:
+        await self.app.set_my_commands(commands=self.commands)
+        await self.dp.start_polling(self.app, allowed_updates=self.dp.resolve_used_update_types())
