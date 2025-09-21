@@ -15,3 +15,9 @@ class Bot(Application):
         self.dp.startup.register(on_startup)
         self.dp.shutdown.register(on_shutdown)
         self.commands = commands
+        self.routers = [
+            base_router,
+            user_router,
+            game_router
+        ]
+        self.dp.include_routers(*self.routers)
