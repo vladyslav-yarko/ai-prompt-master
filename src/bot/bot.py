@@ -8,5 +8,10 @@ from src.bot.routers import *
 
 
 class Bot(Application):
-    pass
-
+    def __init__(self):
+        super().__init__()
+        self.token = settings.BOT_TOKEN
+        self.dp = Dispatcher()
+        self.dp.startup.register(on_startup)
+        self.dp.shutdown.register(on_shutdown)
+        self.commands = commands
