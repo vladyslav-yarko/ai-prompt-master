@@ -1,6 +1,11 @@
-def main():
-    print("Hello from ai-prompt-master!")
+import asyncio
+
+from src import bot
 
 
-if __name__ == "__main__":
-    main()
+async def main():
+    # Can be other apps
+    
+    await asyncio.gather(
+        bot.run()
+    )
