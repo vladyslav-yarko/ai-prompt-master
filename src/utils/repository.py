@@ -106,7 +106,8 @@ class SQLAlchemyRepository(Repository):
         # PostgreSQL
         stmt = insert(self.model).values(**kwargs).returning(self.model)
         obj = await self.session.execute(stmt)
-        return obj.scalar()
+        result = obj.scalar()
+        return result
         # MySQL
         # stmt = insert(self.model).values(**kwargs)
         # result = await self.session.execute(stmt)
