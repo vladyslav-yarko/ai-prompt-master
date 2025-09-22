@@ -1,7 +1,7 @@
 from typing import Optional
 
 from g4f.client import AsyncClient
-from g4f.Provider import Chatai 
+from g4f.Provider import Yqcloud
 
 from src.config import settings
 
@@ -11,8 +11,11 @@ class LLM:
         self, 
         model: Optional[None] = None,
         temperature: float = 0.5):
+        # self.client = AsyncClient(
+        #     # provider=Chatai
+        # )
         self.client = AsyncClient(
-            provider=Chatai
+            provider=Yqcloud
         )
         self.model = model if model is not None else settings.MODEL
         self.temperature = temperature
